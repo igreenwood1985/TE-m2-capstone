@@ -19,13 +19,13 @@ public class AccountController {
     private final UserDao userDao;
     private final AccountDao accountDao;
 
-    private final String API_BASE_URL = "http://localhost:8080/account";
+    //private final String API_BASE_URL = "http://localhost:8080/account";
     public AccountController(UserDao userDao, AccountDao accountDao) {
         this.userDao = userDao;
         this.accountDao = accountDao;
     }
 
-    @RequestMapping(path = API_BASE_URL, method = RequestMethod.GET)
+    @RequestMapping(path = "/account", method = RequestMethod.GET)
     public BigDecimal getUserAccountBalance(Principal user){
         int userId = userDao.findIdByUsername(user.getName());
         BigDecimal userBalance = accountDao.getUserAccount(userId).getBalance();

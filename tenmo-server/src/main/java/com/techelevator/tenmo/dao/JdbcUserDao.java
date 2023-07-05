@@ -60,6 +60,7 @@ public class JdbcUserDao implements UserDao {
         }
 
         return users;
+
     }
 
     @Override
@@ -95,6 +96,8 @@ public class JdbcUserDao implements UserDao {
 
         return true;
     }
+
+
 
     private User mapRowToUser(SqlRowSet rs) {
         User user = new User();
