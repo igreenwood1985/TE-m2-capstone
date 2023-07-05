@@ -37,7 +37,9 @@ public class App {
         loginMenu();
         if (currentUser != null) {
             // TODO: Instantiate services that require the current user to exist here
+            //this.currentUser = new AuthenticatedUser();
             this.accountService = new AccountService();
+            accountService.setAuthToken(currentUser.getToken());
             mainMenu();
         }
     }
@@ -101,7 +103,7 @@ public class App {
 
 	private void viewCurrentBalance() {
 		// TODO Auto-generated method stub
-		accountService.getUserBalance();
+		consoleService.printMessage("$" + accountService.getUserBalance().toString());
 	}
 
 	private void viewTransferHistory() {

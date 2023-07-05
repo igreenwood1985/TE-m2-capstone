@@ -16,15 +16,23 @@ public class AccountService {
     }
 
     public BigDecimal getUserBalance(){
-        ResponseEntity<BigDecimal> balance = restTemplate.exchange(API_BASE_URL, HttpMethod.GET,
-                makeBalanceEntity(), BigDecimal.class);
+        ResponseEntity<BigDecimal> balance = restTemplate.exchange(
+                API_BASE_URL,
+                HttpMethod.GET,
+                makeAuthEntity(),
+                BigDecimal.class);
         return balance.getBody();
-
     }
 
     private HttpEntity<BigDecimal> makeBalanceEntity(){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(authToken);
+        return new HttpEntity<>(headers);
+    }
+
+    private HttpEntity<Void> makeAuthEntity() {
+        HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(authToken);
         return new HttpEntity<>(headers);
     }
