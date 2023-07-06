@@ -26,12 +26,13 @@ public class TransferService {
         this.authToken = authToken;
     }
 
-//   // public List<User> getUserList(User newList) {
-//     //   HttpHeaders headers = new HttpHeaders();
-//       // headers.setContentType(MediaType.APPLICATION_JSON);
-//        HttpEntity<User> entity = new HttpEntity<>(newList, headers);
+    public List<User> getUserList(User newList) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<User> entity = new HttpEntity<>(newList, headers);
 
-    //}
+
+    }
 
     public Transfer sendMoney(Transfer transfer) {
         ResponseEntity<BigDecimal> transferAmount;

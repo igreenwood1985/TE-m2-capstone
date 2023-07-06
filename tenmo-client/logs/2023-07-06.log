@@ -1,2 +1,10 @@
 2023-07-06T15:19:13.7432898 500 : [{"timestamp":"2023-07-06T19:19:13.696+00:00","status":500,"error":"Internal Server Error","message":"PreparedStatementCallback; SQL [INSERT INTO tenmo_user (username, password_hash) VALUES (?, ?) RETU... (530 bytes)]
 2023-07-06T15:22:36.3734302 401 : [no body]
+2023-07-06T15:26:41.292984 I/O error on POST request for "http://localhost:8080/login": Connection refused: connect; nested exception is java.net.ConnectException: Connection refused: connect
+2023-07-06T15:26:59.4211005 I/O error on POST request for "http://localhost:8080/login": Connection refused: connect; nested exception is java.net.ConnectException: Connection refused: connect
+2023-07-06T15:27:11.0904418 I/O error on POST request for "http://localhost:8080/register": Connection refused: connect; nested exception is java.net.ConnectException: Connection refused: connect
+2023-07-06T15:28:02.4051869 401 : [no body]
+2023-07-06T15:30:22.4576628 401 : [no body]
+2023-07-06T15:40:37.439233 500 : [{"timestamp":"2023-07-06T19:40:37.410+00:00","status":500,"error":"Internal Server Error","message":"No message available","path":"/transfer"}]
+2023-07-06T15:42:35.0056896 500 : [{"timestamp":"2023-07-06T19:42:34.862+00:00","status":500,"error":"Internal Server Error","message":"No message available","path":"/transfer"}]
+2023-07-06T15:45:36.1484761 500 : [{"timestamp":"2023-07-06T19:45:36.051+00:00","status":500,"error":"Internal Server Error","message":"No message available","path":"/transfer"}]

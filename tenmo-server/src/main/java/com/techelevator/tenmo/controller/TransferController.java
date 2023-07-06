@@ -5,6 +5,7 @@ import com.techelevator.tenmo.dao.JdbcTransferDao;
 import com.techelevator.tenmo.dao.JdbcUserDao;
 import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.Transfer;
+import com.techelevator.tenmo.model.User;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,7 +18,9 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
 @RestController
 @PreAuthorize("isAuthenticated()")
@@ -33,8 +36,27 @@ public class TransferController {
     public TransferController(JdbcTransferDao transferDao, JdbcAccountDao accountDao, JdbcUserDao userDao){
         this.accountDao = accountDao;
         this.transferDao = transferDao;
-        this. userDao = userDao;
+        this.userDao = userDao;
     }
+
+    @RequestMapping(path = "/transfer", method = RequestMethod.GET)
+    public List<User> getUserList(Principal principal){
+        List<User> userList = new ArrayList<User>();
+        userList = userDao.findAll();
+
+        int i = 0;
+        for(User user: userList){
+            if(user.getUsername().equals(principal.getName())){
+                i = userList.indexOf(user);
+            }
+
+        }
+        userList.remove(i);
+        return userList;
+    }
+
+
+
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/transfer", method = RequestMethod.POST)
     public Transfer createTransfer(@RequestBody Transfer transfer, Principal principal){
