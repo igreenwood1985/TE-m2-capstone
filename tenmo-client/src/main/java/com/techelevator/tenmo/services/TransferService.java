@@ -37,6 +37,7 @@ public class TransferService {
         ResponseEntity<BigDecimal> transferAmount;
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(authToken);
         HttpEntity<Transfer> entity = new HttpEntity<>(transfer, headers);
         Transfer returnedTransfer = null;
         try {
