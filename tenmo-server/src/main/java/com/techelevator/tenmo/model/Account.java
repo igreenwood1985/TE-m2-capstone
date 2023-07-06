@@ -35,4 +35,26 @@ public class Account {
     public void setAccountId(int accountId) {
         this.accountId = accountId;
     }
+
+
+    public Account increaseBalance(BigDecimal amount, Account accountToModify){
+        BigDecimal newBalance = accountToModify.getBalance().add(amount);
+        accountToModify.setBalance(newBalance);
+        return accountToModify;
+    }
+
+    public Account decreaseBalance(BigDecimal amount, Account accountToModify){
+        BigDecimal newBalance = accountToModify.getBalance().add(amount);
+        accountToModify.setBalance(newBalance);
+        return accountToModify;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "balance=" + balance +
+                ", userId=" + userId +
+                ", accountId=" + accountId +
+                '}';
+    }
 }

@@ -37,9 +37,10 @@ public class App {
         loginMenu();
         if (currentUser != null) {
             // TODO: Instantiate services that require the current user to exist here
-            //this.currentUser = new AuthenticatedUser();
             this.accountService = new AccountService();
+            this.transferService = new TransferService();
             accountService.setAuthToken(currentUser.getToken());
+
             mainMenu();
         }
     }
@@ -102,12 +103,11 @@ public class App {
     }
 
 	private void viewCurrentBalance() {
-		// TODO Auto-generated method stub
 		consoleService.printMessage("$" + accountService.getUserBalance().toString());
 	}
 
 	private void viewTransferHistory() {
-		// TODO Auto-generated method stub
+        // TODO Auto-generated method stub
 		
 	}
 
@@ -118,7 +118,7 @@ public class App {
 
 	private void sendBucks() {
 		// TODO Auto-generated method stub
-		
+		//
 	}
 
 	private void requestBucks() {
