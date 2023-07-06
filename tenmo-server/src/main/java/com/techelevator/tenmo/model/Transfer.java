@@ -12,42 +12,65 @@ import java.math.BigDecimal;
 
 public class Transfer {
 
-    private int transferId;
+    private int transferType;
 
     private int fromUserId;
 
     private int toUserId;
-    
-    private int transferType;
+
+    private BigDecimal transferAmount;
+
+    public void setTransferType(int transferType) {
+        this.transferType = transferType;
+    }
+
+    public int getTransferStatus() {
+        return transferStatus;
+    }
+
+    public void setTransferStatus(int transferStatus) {
+        this.transferStatus = transferStatus;
+    }
+
     private int transferStatus;
+    private int transferId;
+
     /*
     Should be able to derive account numbers from user IDs...
     ...but that requires DAO access.
     given that this is a single account per user situation, it's probably fine, but it doesn't feel right.
      */
-
     private int transferStatusId;
     // always positive.
     // the maximum here is our account balance.
     // buuuuut we gotta get that from the DAO, I guess.
-    @Max()
-    @Min()
-    private BigDecimal transferAmount;
 
-    public Transfer(){
-
-    }
-    public Transfer(int transferId, int fromUserId, int toUserId, BigDecimal transferAmount, int transferStatusId){
+    public Transfer(int transferType, int fromUserId, int toUserId, BigDecimal transferAmount){
         // constructing a transfer is sending money.
         // sooooo what do we do.
-        this.transferId = transferId;
+        this.transferType = transferType;
         this.fromUserId = fromUserId;
         this.toUserId = toUserId;
         this.transferAmount = transferAmount;
-        this.transferStatusId = transferStatusId;
+
     }
+    public Transfer(){
+
+    }
+//    public Transfer(int transferId, int fromUserId, int toUserId, BigDecimal transferAmount, int transferStatusId){
+//        // constructing a transfer is sending money.
+//        // sooooo what do we do.
+//        this.transferId = transferId;
+//        this.fromUserId = fromUserId;
+//        this.toUserId = toUserId;
+//        this.transferAmount = transferAmount;
+//        this.transferStatusId = transferStatusId;
+//    }
 
 
+    public int getTransferType() {
+        return transferType;
+    }
 
     public int getTransferId() {
         return transferId;

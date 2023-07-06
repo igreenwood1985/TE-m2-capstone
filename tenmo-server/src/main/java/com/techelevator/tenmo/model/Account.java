@@ -37,16 +37,14 @@ public class Account {
     }
 
 
-    public Account increaseBalance(BigDecimal amount, Account accountToModify){
-        BigDecimal newBalance = accountToModify.getBalance().add(amount);
-        accountToModify.setBalance(newBalance);
-        return accountToModify;
+    public void increaseBalance(BigDecimal amount){
+        BigDecimal newBalance = this.getBalance().add(amount);
+        this.setBalance(newBalance);
     }
 
-    public Account decreaseBalance(BigDecimal amount, Account accountToModify){
-        BigDecimal newBalance = accountToModify.getBalance().add(amount);
-        accountToModify.setBalance(newBalance);
-        return accountToModify;
+    public void decreaseBalance(BigDecimal amount){
+        BigDecimal newBalance = this.getBalance().subtract(amount);
+        this.setBalance(newBalance);
     }
 
     @Override
