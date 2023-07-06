@@ -1,28 +1,46 @@
 package com.techelevator.tenmo.model;
 
+import com.techelevator.tenmo.dao.JdbcAccountDao;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
+
 public class Transfer {
+
     private int transferId;
-
+    @NotBlank
+    @NotNull
     private int fromUserId;
-
+    @NotBlank
+    @NotNull
     private int toUserId;
+    
+    private int transferType;
+    private int transferStatus;
     /*
     Should be able to derive account numbers from user IDs...
     ...but that requires DAO access.
     given that this is a single account per user situation, it's probably fine, but it doesn't feel right.
      */
+    @NotBlank
+    @NotNull
     private int transferStatusId;
-    //always positive.
+    // always positive.
+    // the maximum here is our account balance.
+    // buuuuut we gotta get that from the DAO, I guess.
+    @Max()
+    @Min()
     private BigDecimal transferAmount;
-
 
     public Transfer(){
 
     }
-    public Transfer(int transferId, int fromUserId, int toUserId, BigDecimal transferAmount, int transferStatusId, int transferTypeId){
+    public Transfer(int transferId, int fromUserId, int toUserId, BigDecimal transferAmount, int transferStatusId){
         // constructing a transfer is sending money.
         // sooooo what do we do.
         this.transferId = transferId;
