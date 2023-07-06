@@ -38,7 +38,7 @@ public class App {
         if (currentUser != null) {
             // TODO: Instantiate services that require the current user to exist here
             this.accountService = new AccountService();
-            this.transferService = new TransferService();
+            //this.transferService = new TransferService();
             accountService.setAuthToken(currentUser.getToken());
 
             mainMenu();
