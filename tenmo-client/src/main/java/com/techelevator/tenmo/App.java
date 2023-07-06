@@ -25,6 +25,7 @@ public class App {
 
     private AuthenticatedUser currentUser;
 
+
     private AccountService accountService;
 
     public static void main(String[] args) {

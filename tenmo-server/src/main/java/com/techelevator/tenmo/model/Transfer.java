@@ -13,11 +13,9 @@ import java.math.BigDecimal;
 public class Transfer {
 
     private int transferId;
-    @NotBlank
-    @NotNull
+
     private int fromUserId;
-    @NotBlank
-    @NotNull
+
     private int toUserId;
     
     private int transferType;
@@ -27,8 +25,7 @@ public class Transfer {
     ...but that requires DAO access.
     given that this is a single account per user situation, it's probably fine, but it doesn't feel right.
      */
-    @NotBlank
-    @NotNull
+
     private int transferStatusId;
     // always positive.
     // the maximum here is our account balance.
