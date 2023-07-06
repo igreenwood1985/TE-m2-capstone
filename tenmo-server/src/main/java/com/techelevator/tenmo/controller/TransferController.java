@@ -42,7 +42,7 @@ public class TransferController {
                 // check that our users actually exist
 
 
-                if(transfer.getTransferAmount().compareTo(accountDao.getUserAccount(transfer.getFromUserId()).getBalance()) > -1
+                if(transfer.getTransferAmount().compareTo(accountDao.getUserAccount(transfer.getFromUserId()).getBalance()) == -1
                 && transfer.getFromUserId()  != transfer.getToUserId()) {
 
                     // call sendMoney if we have enough money to send

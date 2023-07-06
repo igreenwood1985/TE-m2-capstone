@@ -43,7 +43,7 @@ public class JdbcAccountDao implements AccountDao {
         Account updatedAccount = null;
         int rowsUpdated;
         try {
-            rowsUpdated = jdbcTemplate.update(sql, amount, userId, int.class);
+            rowsUpdated = jdbcTemplate.update(sql, amount, userId);
             updatedAccount = getUserAccount(userId);
             if (rowsUpdated != 1){
                 throw new DaoException("Update failed, wrong number of rows returned.");

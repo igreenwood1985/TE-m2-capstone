@@ -43,7 +43,7 @@ public class Account {
     }
 
     public void decreaseBalance(BigDecimal amount){
-        BigDecimal newBalance = this.getBalance().add(amount);
+        BigDecimal newBalance = this.getBalance().subtract(amount);
         this.setBalance(newBalance);
     }
 

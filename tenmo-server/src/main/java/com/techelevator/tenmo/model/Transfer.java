@@ -45,8 +45,15 @@ public class Transfer {
     // the maximum here is our account balance.
     // buuuuut we gotta get that from the DAO, I guess.
 
+    public Transfer(int transferType, int fromUserId, int toUserId, BigDecimal transferAmount){
+        // constructing a transfer is sending money.
+        // sooooo what do we do.
+        this.transferType = transferType;
+        this.fromUserId = fromUserId;
+        this.toUserId = toUserId;
+        this.transferAmount = transferAmount;
 
-
+    }
     public Transfer(){
 
     }
@@ -59,15 +66,7 @@ public class Transfer {
 //        this.transferAmount = transferAmount;
 //        this.transferStatusId = transferStatusId;
 //    }
-//    public Transfer(int transferType, int fromUserId, int toUserId, BigDecimal transferAmount){
-//        // constructing a transfer is sending money.
-//        // sooooo what do we do.
-//        this.transferType = transferType;
-//        this.fromUserId = fromUserId;
-//        this.toUserId = toUserId;
-//        this.transferAmount = transferAmount;
-//
-//    }
+
 
     public int getTransferType() {
         return transferType;

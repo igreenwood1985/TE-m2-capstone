@@ -64,7 +64,7 @@ public class JdbcTransferDao implements TransferDao {
         } catch (BadSqlGrammarException e) {
             throw new DaoException("Invalid syntax.", e);
         }
-
+        transfer = new Transfer();
         transfer.setTransferId(transferId);
         transfer.setToUserId(toUserId);
         transfer.setFromUserId(fromUserId);
