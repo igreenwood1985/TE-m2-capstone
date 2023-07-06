@@ -6,7 +6,7 @@ public class Transfer {
     private int transferType;
     private int fromUserId;
     private int toUserId;
-    private BigDecimal amount;
+    private BigDecimal transferAmount;
 
     public Transfer() {
 
@@ -15,7 +15,7 @@ public class Transfer {
         this.transferType = transferType;
         this.fromUserId = fromUserId;
         this.toUserId = toUserId;
-        this.amount = amount;
+        this.transferAmount = amount;
     }
 
     public int getTransferType() {
@@ -42,11 +42,11 @@ public class Transfer {
         this.toUserId = toUserId;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public BigDecimal getTransferAmount() {
+        return transferAmount;
     }
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
+    public void setTransferAmount(BigDecimal transferAmount) {
+        this.transferAmount = transferAmount;
     }
 }

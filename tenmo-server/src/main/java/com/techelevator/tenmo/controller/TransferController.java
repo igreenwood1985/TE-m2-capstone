@@ -40,8 +40,8 @@ public class TransferController {
     public Transfer createTransfer(@RequestBody Transfer transfer, Principal principal){
         // TODO: add validation to check transfer amount against from account balance
         // select correct DAO method based on transferType
-        if(!userDao.findByUsername(principal.getName()).equals(transfer.getFromUserId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "YOU CAN'T DO THAT 👏 👏 👏👏👏");
+        if(!( userDao.findIdByUsername(principal.getName()) == transfer.getFromUserId() )) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Tried to send money from not-logged-in-user");
         }
         try {
             if (transfer.getTransferType() == 2){
@@ -67,7 +67,7 @@ public class TransferController {
                     accountDao.updateAccountBalance(transfer.getToUserId(), toAccount.getBalance());
 
                 } else {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "YOU CAN'T DO THAT 👏 👏 👏👏👏");
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tried to send money to yourself, or tried to send more money than you had");
                 }
             } else {
                 //call requestMoney
@@ -78,6 +78,4 @@ public class TransferController {
         }
         return transfer;
     }
-
-
 }

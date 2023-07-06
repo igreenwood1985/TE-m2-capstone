@@ -124,7 +124,7 @@ public class App {
         Transfer transfer = new Transfer();
         transfer.setFromUserId(currentUser.getUser().getId());
         transfer.setToUserId(consoleService.promptForInt("Give user Id"));
-        transfer.setAmount(consoleService.promptForBigDecimal("Enter a Decimal Number"));
+        transfer.setTransferAmount(consoleService.promptForBigDecimal("Enter a Decimal Number"));
         transfer.setTransferType(2);
         transferService.sendMoney(transfer);
 
