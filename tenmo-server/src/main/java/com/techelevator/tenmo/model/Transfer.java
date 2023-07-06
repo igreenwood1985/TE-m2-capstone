@@ -1,10 +1,13 @@
 package com.techelevator.tenmo.model;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public class Transfer {
     private int transferId;
+
     private int fromUserId;
+
     private int toUserId;
     /*
     Should be able to derive account numbers from user IDs...
@@ -15,10 +18,11 @@ public class Transfer {
     //always positive.
     private BigDecimal transferAmount;
 
+
     public Transfer(){
 
     }
-    public Transfer(int transferId, int fromUserId, int toUserId, BigDecimal transferAmount, int transferStatusId){
+    public Transfer(int transferId, int fromUserId, int toUserId, BigDecimal transferAmount, int transferStatusId, int transferTypeId){
         // constructing a transfer is sending money.
         // sooooo what do we do.
         this.transferId = transferId;
