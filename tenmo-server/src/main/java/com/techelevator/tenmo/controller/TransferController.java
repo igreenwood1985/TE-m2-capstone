@@ -2,10 +2,12 @@ package com.techelevator.tenmo.controller;
 
 import com.techelevator.tenmo.dao.JdbcAccountDao;
 import com.techelevator.tenmo.dao.JdbcTransferDao;
+import com.techelevator.tenmo.dao.JdbcUserDao;
 import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.Transfer;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.ResourceAccessException;
@@ -14,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.util.BitSet;
 
 @RestController
@@ -25,16 +28,21 @@ public class TransferController {
 
     private JdbcAccountDao accountDao;
     private JdbcTransferDao transferDao;
+    private JdbcUserDao userDao;
 
-    public TransferController(JdbcTransferDao transferDao, JdbcAccountDao accountDao){
+    public TransferController(JdbcTransferDao transferDao, JdbcAccountDao accountDao, JdbcUserDao userDao){
         this.accountDao = accountDao;
         this.transferDao = transferDao;
+        this. userDao = userDao;
     }
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/transfer", method = RequestMethod.POST)
-    public Transfer createTransfer(@RequestBody Transfer transfer){
+    public Transfer createTransfer(@RequestBody Transfer transfer, Principal principal){
         // TODO: add validation to check transfer amount against from account balance
         // select correct DAO method based on transferType
+        if(!userDao.findByUsername(principal.getName()).equals(transfer.getFromUserId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "YOU CAN'T DO THAT 👏 👏 👏👏👏");
+        }
         try {
             if (transfer.getTransferType() == 2){
                 // check if current user's balance is high enough to accommodate amount
