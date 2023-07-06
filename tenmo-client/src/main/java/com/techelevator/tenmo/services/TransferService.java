@@ -3,16 +3,15 @@ package com.techelevator.tenmo.services;
 import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.User;
 import com.techelevator.util.BasicLogger;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TransferService {
@@ -26,12 +25,12 @@ public class TransferService {
         this.authToken = authToken;
     }
 
-    public List<User> getUserList(User newList) {
+    public List<User> getUserList() {
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<User> entity = new HttpEntity<>(newList, headers);
-
-
+        headers.setBearerAuth(authToken);
+        HttpEntity<User> entity = new HttpEntity<>(headers);
+        User[] userList =   restTemplate.exchange(API_BASE_URL, HttpMethod.GET, entity, User[].class).getBody();
+        return Arrays.asList(userList);
     }
 
     public Transfer sendMoney(Transfer transfer) {
