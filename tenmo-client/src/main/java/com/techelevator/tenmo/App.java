@@ -8,6 +8,8 @@ import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.ConsoleService;
 import com.techelevator.tenmo.services.TransferService;
 
+import java.math.BigDecimal;
+
 public class App {
 
     private static final String API_BASE_URL = "http://localhost:8080/";
@@ -122,11 +124,29 @@ public class App {
 
 	private void sendBucks() {
         Transfer transfer = new Transfer();
+        System.out.println("User IDs           User Names");
+        for(String userNameAndID : transferService.getUserNameList()){
+            System.out.println(userNameAndID);
+        }
         transfer.setFromUserId(currentUser.getUser().getId());
-        transfer.setToUserId(consoleService.promptForInt("Give user Id"));
-        transfer.setTransferAmount(consoleService.promptForBigDecimal("Enter a Decimal Number"));
-        transfer.setTransferType(2);
-        transferService.sendMoney(transfer);
+        int idEntry = consoleService.promptForInt("Enter the ID of the user you'd like to send money to (0 to cancel): ");
+        if (idEntry == 0){
+            return;
+        } else {
+            transfer.setToUserId(idEntry);
+
+            BigDecimal transferAmount = (consoleService.promptForBigDecimal("How much money would you like to send? "));
+            while (transferAmount.compareTo(BigDecimal.ZERO) <= 0
+                    || transferAmount.compareTo(accountService.getUserBalance()) == 1){
+                consoleService.printMessage("Enter a number greater than zero, and not greater than your total account balance");
+                transferAmount = consoleService.promptForBigDecimal("How much money would you like to send? ");
+            }
+            transfer.setTransferAmount(transferAmount);
+            transfer.setTransferType(2);
+            transferService.sendMoney(transfer);
+        }
+        consoleService.printMessage("You sent user " + transfer.getToUserId() + " $" + transfer.getTransferAmount() + ".");
+        consoleService.printMessage("Your current balance is: $" + accountService.getUserBalance());
 
 	}
 
