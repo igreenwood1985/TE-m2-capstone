@@ -20,9 +20,14 @@ public class Transfer {
 
     private BigDecimal transferAmount;
 
+    private int transferStatus;
+
+    private int transferId;
+
     public void setTransferType(int transferType) {
         this.transferType = transferType;
     }
+
 
     public int getTransferStatus() {
         return transferStatus;
@@ -31,9 +36,6 @@ public class Transfer {
     public void setTransferStatus(int transferStatus) {
         this.transferStatus = transferStatus;
     }
-
-    private int transferStatus;
-    private int transferId;
 
     /*
     Should be able to derive account numbers from user IDs...

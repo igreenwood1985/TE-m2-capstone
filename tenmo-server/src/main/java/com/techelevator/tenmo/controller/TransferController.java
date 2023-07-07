@@ -33,6 +33,12 @@ public class TransferController {
     private JdbcTransferDao transferDao;
     private JdbcUserDao userDao;
 
+    private int getPrincipalId(Principal principal){
+        int id = 0;
+        id = userDao.findIdByUsername(principal.getName());
+        return id;
+    }
+
     public TransferController(JdbcTransferDao transferDao, JdbcAccountDao accountDao, JdbcUserDao userDao){
         this.accountDao = accountDao;
         this.transferDao = transferDao;
@@ -53,6 +59,13 @@ public class TransferController {
         }
         userList.remove(i);
         return userList;
+    }
+
+    @RequestMapping(path = "/transfers", method = RequestMethod.GET)
+    public List<Transfer> getTransferList(Principal principal){
+        List<Transfer> userTransfers = new ArrayList<Transfer>();
+        userTransfers = transferDao.getAllTransfersForUser(getPrincipalId(principal));
+        return userTransfers;
     }
 
 
