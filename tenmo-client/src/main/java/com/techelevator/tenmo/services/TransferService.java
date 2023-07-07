@@ -9,6 +9,7 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +25,14 @@ public class TransferService {
     public void setAuthToken(String authToken){
         this.authToken = authToken;
     }
-
+        public List<Transfer> getUserTransfers(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(authToken);
+        HttpEntity<Void>entity = new HttpEntity<>(headers);
+        Transfer[] userTransfers = restTemplate.exchange(API_BASE_URL + "s", HttpMethod.GET, entity, Transfer[].class).getBody();
+        List<Transfer>userTransferList = Arrays.asList(userTransfers);
+        return userTransferList;
+        }
     public List<String> getUserNameList() {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(authToken);

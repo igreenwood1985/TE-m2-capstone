@@ -7,6 +7,33 @@ public class Transfer {
     private int fromUserId;
     private int toUserId;
     private BigDecimal transferAmount;
+    private int transferStatus;
+    private int transferId;
+
+    public int getTransferId() {
+        return transferId;
+    }
+
+    public Transfer(int transferType, int fromUserId, int toUserId, BigDecimal transferAmount, int transferStatus, int transferId) {
+        this.transferType = transferType;
+        this.fromUserId = fromUserId;
+        this.toUserId = toUserId;
+        this.transferAmount = transferAmount;
+        this.transferStatus = transferStatus;
+        this.transferId = transferId;
+    }
+
+    public void setTransferId(int transferId) {
+        this.transferId = transferId;
+    }
+
+    public int getTransferStatus() {
+        return transferStatus;
+    }
+
+    public void setTransferStatus(int transferStatus) {
+        this.transferStatus = transferStatus;
+    }
 
     public Transfer() {
 
