@@ -52,6 +52,36 @@ public class JdbcTransferDao implements TransferDao {
 
         return transfers;
     }
+
+
+    public Transfer getTrandferById(int transferId){
+        String sql = "SELECT transfer_id, transfer_status_id , transfer_type_id, from_account.user_id AS from_user_id, to_account.user_id AS to_user_id, amount " +
+                "                FROM transfer AS t " +
+                "                JOIN account as from_account ON t.account_from = from_account.account_id " +
+                "                JOIN account as to_account ON t.account_to = to_account.account_id " +
+                "                WHERE transfer_id = ?;";
+
+        Transfer returnedTransfer = null;
+
+        try {
+            SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, transferId);
+                if(rows.next()){
+                    returnedTransfer = mapRowToTransfer(rows);
+                } else {
+                    throw new DaoException("Transfer not found.");
+                }
+
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to the database.", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Action would violate data integrity.", e);
+        } catch (BadSqlGrammarException e) {
+            throw new DaoException("Invalid syntax.", e);
+        }
+
+
+        return returnedTransfer;
+    }
     @Override
     public Transfer sendMoney(BigDecimal amount, int fromUserId, int toUserId){
         // sends are instantly approved (status 2)

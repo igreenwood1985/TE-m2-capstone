@@ -15,6 +15,7 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Path;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.security.Principal;
@@ -110,5 +111,16 @@ public class TransferController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Couldn't get connected for some reason");
         }
         return transfer;
+    }
+
+    @RequestMapping(path = "/transfers/{id}", method = RequestMethod.GET )
+    public Transfer getTransferById(@PathVariable int id, Principal principal){
+        List<Transfer> userTransfers = transferDao.getAllTransfersForUser(getPrincipalId(principal));
+        Transfer transfer = transferDao.getTrandferById(id);
+        if(userTransfers.contains(transfer)){
+            return transfer;
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
     }
 }
