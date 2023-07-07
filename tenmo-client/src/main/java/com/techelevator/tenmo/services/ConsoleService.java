@@ -4,6 +4,7 @@ package com.techelevator.tenmo.services;
 import com.techelevator.tenmo.model.UserCredentials;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleService {
@@ -91,4 +92,5 @@ public class ConsoleService {
     public void printMessage(String message) {
         System.out.println(message);
     }
+
 }

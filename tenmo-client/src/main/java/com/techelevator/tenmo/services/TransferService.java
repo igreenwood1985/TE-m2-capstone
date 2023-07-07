@@ -25,12 +25,17 @@ public class TransferService {
         this.authToken = authToken;
     }
 
-    public List<User> getUserList() {
+    public List<String> getUserNameList() {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(authToken);
         HttpEntity<User> entity = new HttpEntity<>(headers);
-        User[] userList =   restTemplate.exchange(API_BASE_URL, HttpMethod.GET, entity, User[].class).getBody();
-        return Arrays.asList(userList);
+        User[] userList = restTemplate.exchange(API_BASE_URL, HttpMethod.GET, entity, User[].class).getBody();
+        Arrays.asList(userList);
+        List<String> userNamesAndIds = new ArrayList<>();
+        for(User user : userList){
+            userNamesAndIds.add("ID: " + user.getId() + " Name: " + user.getUsername());
+        }
+        return userNamesAndIds;
     }
 
     public Transfer sendMoney(Transfer transfer) {
