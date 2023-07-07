@@ -2,6 +2,7 @@ package com.techelevator.tenmo;
 
 import com.techelevator.tenmo.model.AuthenticatedUser;
 import com.techelevator.tenmo.model.Transfer;
+import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.model.UserCredentials;
 import com.techelevator.tenmo.services.AccountService;
 import com.techelevator.tenmo.services.AuthenticationService;
@@ -113,7 +114,33 @@ public class App {
 	}
 
 	private void viewTransferHistory() {
-         transferService.getUserTransfers();
+
+         for(Transfer transfer : transferService.getUserTransfers()){
+             String type = "";
+             String status = "";
+             String id = String.valueOf(transfer.getTransferId());
+             String fromUser = String.valueOf(transfer.getFromUserId());
+             String toUser = String.valueOf(transfer.getToUserId());
+             String amount = String.valueOf(transfer.getTransferAmount());
+
+             int statusInt = transfer.getTransferStatus();
+             int typeInt = transfer.getTransferType();
+             if(statusInt == 1){
+                 status = "Pending";
+             } else if (statusInt == 2){
+                 status = "Approved";
+             } else if (statusInt == 3) {
+                 status = "Rejected";
+             }
+
+             if(typeInt == 2){
+                 type = "Send TE Bucks";
+             } else {
+                 type = "Request TE Bucks";
+             }
+
+             consoleService.printTransferHistory(id, type, fromUser, toUser, amount, status);
+         }
 	}
 
 	private void viewPendingRequests() {
@@ -123,11 +150,12 @@ public class App {
 
 	private void sendBucks() {
         Transfer transfer = new Transfer();
-        System.out.println("User IDs           User Names");
-        for(String userNameAndID : transferService.getUserNameList()){
-            System.out.println(userNameAndID);
-        }
         transfer.setFromUserId(currentUser.getUser().getId());
+        consoleService.printUserNameAndIdHeader();
+        for(User user : transferService.getUserNameList()){
+            consoleService.printUserNamesAndIds(user.getUsername(), String.valueOf(user.getId()));
+        }
+        consoleService.printMessage("\n");
         int idEntry = consoleService.promptForInt("Enter the ID of the user you'd like to send money to (0 to cancel): ");
         if (idEntry == 0){
             return;

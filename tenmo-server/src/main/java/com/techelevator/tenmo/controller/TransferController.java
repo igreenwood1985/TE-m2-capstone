@@ -68,8 +68,6 @@ public class TransferController {
         return userTransfers;
     }
 
-
-
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/transfer", method = RequestMethod.POST)
     public Transfer createTransfer(@RequestBody Transfer transfer, Principal principal){

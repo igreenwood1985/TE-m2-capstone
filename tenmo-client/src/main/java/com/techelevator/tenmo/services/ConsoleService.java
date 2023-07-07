@@ -93,4 +93,20 @@ public class ConsoleService {
         System.out.println(message);
     }
 
+    public void printUserNameAndIdHeader(){
+        System.out.printf("%-10s %10s %n", "Username", "User ID");
+    }
+
+    public void printUserNamesAndIds(String id, String name){
+        System.out.printf("%-10s %10s %n", id, name);
+    }
+    public void printTransferHistoryHeader(){
+
+    }
+
+    public void printTransferHistory(String id, String type, String fromAccount, String toAccount, String amount, String status){
+
+        System.out.printf("%-8s %-20s %-8s %-8s %-10s %-12s %n",id, type, fromAccount, toAccount, amount, status);
+    }
+
 }
