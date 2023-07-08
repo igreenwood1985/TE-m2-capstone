@@ -4,7 +4,6 @@ package com.techelevator.tenmo.services;
 import com.techelevator.tenmo.model.UserCredentials;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleService {
@@ -104,7 +103,7 @@ public class ConsoleService {
 
     }
 
-    public void printTransferHistory(String id, String type, String fromAccount, String toAccount, String amount, String status){
+    public void printTransfer(String id, String type, String fromAccount, String toAccount, String amount, String status){
 
         System.out.printf("%-8s %-20s %-8s %-8s %-10s %-12s %n",id, type, fromAccount, toAccount, amount, status);
     }

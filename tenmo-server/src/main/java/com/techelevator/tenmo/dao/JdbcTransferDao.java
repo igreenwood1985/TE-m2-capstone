@@ -1,7 +1,6 @@
 package com.techelevator.tenmo.dao;
 
 import com.techelevator.tenmo.exception.DaoException;
-import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.Transfer;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -54,7 +53,7 @@ public class JdbcTransferDao implements TransferDao {
     }
 
 
-    public Transfer getTrandferById(int transferId){
+    public Transfer getTransferById(int transferId){
         String sql = "SELECT transfer_id, transfer_status_id , transfer_type_id, from_account.user_id AS from_user_id, to_account.user_id AS to_user_id, amount " +
                 "                FROM transfer AS t " +
                 "                JOIN account as from_account ON t.account_from = from_account.account_id " +

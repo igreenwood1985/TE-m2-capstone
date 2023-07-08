@@ -6,21 +6,14 @@ import com.techelevator.tenmo.dao.JdbcUserDao;
 import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.User;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.ResourceAccessException;
-import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.validation.Path;
-import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.List;
 
 @RestController
@@ -116,8 +109,14 @@ public class TransferController {
     @RequestMapping(path = "/transfers/{id}", method = RequestMethod.GET )
     public Transfer getTransferById(@PathVariable int id, Principal principal){
         List<Transfer> userTransfers = transferDao.getAllTransfersForUser(getPrincipalId(principal));
-        Transfer transfer = transferDao.getTrandferById(id);
-        if(userTransfers.contains(transfer)){
+        List<Integer> userTransferIds = new ArrayList<>();
+        for (Transfer transfer : userTransfers){
+            userTransferIds.add(transfer.getTransferId());
+        }
+
+        Transfer transfer = transferDao.getTransferById(id);
+        int proposedId = transfer.getTransferId();
+        if(userTransferIds.contains(proposedId)){
             return transfer;
         } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);

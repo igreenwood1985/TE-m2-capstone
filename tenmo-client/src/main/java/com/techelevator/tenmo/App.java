@@ -114,68 +114,86 @@ public class App {
 	}
 
 	private void viewTransferHistory() {
-
-         for(Transfer transfer : transferService.getUserTransfers()){
-             String type = "";
-             String status = "";
-             String id = String.valueOf(transfer.getTransferId());
-             String fromUser = String.valueOf(transfer.getFromUserId());
-             String toUser = String.valueOf(transfer.getToUserId());
-             String amount = String.valueOf(transfer.getTransferAmount());
-
-             int statusInt = transfer.getTransferStatus();
-             int typeInt = transfer.getTransferType();
-             if(statusInt == 1){
-                 status = "Pending";
-             } else if (statusInt == 2){
-                 status = "Approved";
-             } else if (statusInt == 3) {
-                 status = "Rejected";
-             }
-
-             if(typeInt == 2){
-                 type = "Send TE Bucks";
-             } else {
-                 type = "Request TE Bucks";
-             }
-
-             consoleService.printTransferHistory(id, type, fromUser, toUser, amount, status);
-         }
-	}
-
-	private void viewPendingRequests() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private void sendBucks() {
-        Transfer transfer = new Transfer();
-        transfer.setFromUserId(currentUser.getUser().getId());
-        consoleService.printUserNameAndIdHeader();
-        for(User user : transferService.getUserNameList()){
-            consoleService.printUserNamesAndIds(user.getUsername(), String.valueOf(user.getId()));
+        int choice = 0;
+        while (choice != 1 && choice != 2) {
+            choice = consoleService.promptForInt("Enter 1) to view all transfers, and 2) to view a specific transfer.");
         }
-        consoleService.printMessage("\n");
-        int idEntry = consoleService.promptForInt("Enter the ID of the user you'd like to send money to (0 to cancel): ");
-        if (idEntry == 0){
-            return;
-        } else {
-            transfer.setToUserId(idEntry);
 
-            BigDecimal transferAmount = (consoleService.promptForBigDecimal("How much money would you like to send? "));
-            while (transferAmount.compareTo(BigDecimal.ZERO) <= 0
-                    || transferAmount.compareTo(accountService.getUserBalance()) == 1){
-                consoleService.printMessage("Enter a number greater than zero, and not greater than your total account balance");
-                transferAmount = consoleService.promptForBigDecimal("How much money would you like to send? ");
+        if (choice == 1) {
+            for (Transfer transfer : transferService.getUserTransfers()) {
+                String type = "";
+                String status = "";
+                String id = String.valueOf(transfer.getTransferId());
+                String fromUser = String.valueOf(transfer.getFromUserId());
+                String toUser = String.valueOf(transfer.getToUserId());
+                String amount = String.valueOf(transfer.getTransferAmount());
+
+                int statusInt = transfer.getTransferStatus();
+                int typeInt = transfer.getTransferType();
+                if (statusInt == 1) {
+                    status = "Pending";
+                } else if (statusInt == 2) {
+                    status = "Approved";
+                } else if (statusInt == 3) {
+                    status = "Rejected";
+                }
+
+                if (typeInt == 2) {
+                    type = "Send TE Bucks";
+                } else {
+                    type = "Request TE Bucks";
+                }
+
+                consoleService.printTransfer(id, type, fromUser, toUser, amount, status);
             }
-            transfer.setTransferAmount(transferAmount);
-            transfer.setTransferType(2);
-            transferService.sendMoney(transfer);
+        } else {
+            int id = consoleService.promptForInt("Enter a transfer ID: ");
+            Transfer requestedTransfer = transferService.getTransferById(id);
+            consoleService.printTransfer(
+                    String.valueOf(requestedTransfer.getTransferId()),
+                    String.valueOf(requestedTransfer.getTransferType()) ,
+                    String.valueOf(requestedTransfer.getFromUserId()) ,
+                    String.valueOf(requestedTransfer.getToUserId()) ,
+                    String.valueOf(requestedTransfer.getTransferAmount()),
+                    String.valueOf(requestedTransfer.getTransferStatus()));
         }
-        consoleService.printMessage("You sent user " + transfer.getToUserId() + " $" + transfer.getTransferAmount() + ".");
-        consoleService.printMessage("Your current balance is: $" + accountService.getUserBalance());
+    }
 
-	}
+        private void viewPendingRequests() {
+            // TODO Auto-generated method stub
+
+        }
+
+        private void sendBucks() {
+            Transfer transfer = new Transfer();
+            transfer.setFromUserId(currentUser.getUser().getId());
+            consoleService.printUserNameAndIdHeader();
+            for(User user : transferService.getUserNameList()){
+                consoleService.printUserNamesAndIds(user.getUsername(), String.valueOf(user.getId()));
+            }
+            consoleService.printMessage("\n");
+            int idEntry = consoleService.promptForInt("Enter the ID of the user you'd like to send money to (0 to cancel): ");
+            if (idEntry == 0){
+                return;
+            } else {
+                transfer.setToUserId(idEntry);
+
+                BigDecimal transferAmount = (consoleService.promptForBigDecimal("How much money would you like to send? "));
+                while (transferAmount.compareTo(BigDecimal.ZERO) <= 0
+                        || transferAmount.compareTo(accountService.getUserBalance()) == 1){
+                    consoleService.printMessage("Enter a number greater than zero, and not greater than your total account balance");
+                    transferAmount = consoleService.promptForBigDecimal("How much money would you like to send? ");
+                }
+                transfer.setTransferAmount(transferAmount);
+                transfer.setTransferType(2);
+                transferService.sendMoney(transfer);
+            }
+            consoleService.printMessage("You sent user " + transfer.getToUserId() + " $" + transfer.getTransferAmount() + ".");
+            consoleService.printMessage("Your current balance is: $" + accountService.getUserBalance());
+        }
+
+
+
 
 	private void requestBucks() {
 		// TODO Auto-generated method stub

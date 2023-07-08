@@ -25,14 +25,24 @@ public class TransferService {
     public void setAuthToken(String authToken){
         this.authToken = authToken;
     }
-        public List<Transfer> getUserTransfers(){
+
+    public Transfer getTransferById (int id){
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(authToken);
-        HttpEntity<Void>entity = new HttpEntity<>(headers);
-        Transfer[] userTransfers = restTemplate.exchange(API_BASE_URL + "s", HttpMethod.GET, entity, Transfer[].class).getBody();
-        List<Transfer>userTransferList = Arrays.asList(userTransfers);
-        return userTransferList;
-        }
+        HttpEntity<Void> entity = new HttpEntity<>(headers);
+        Transfer retrievedTransfer = restTemplate.exchange(API_BASE_URL + "s/" + id, HttpMethod.GET, entity, Transfer.class ).getBody();
+
+        return retrievedTransfer;
+    }
+
+    public List<Transfer> getUserTransfers(){
+    HttpHeaders headers = new HttpHeaders();
+    headers.setBearerAuth(authToken);
+    HttpEntity<Void>entity = new HttpEntity<>(headers);
+    Transfer[] userTransfers = restTemplate.exchange(API_BASE_URL + "s", HttpMethod.GET, entity, Transfer[].class).getBody();
+    List<Transfer>userTransferList = Arrays.asList(userTransfers);
+    return userTransferList;
+    }
     public List<User> getUserNameList() {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(authToken);
@@ -61,5 +71,7 @@ public class TransferService {
         headers.setBearerAuth(authToken);
         return new HttpEntity<>(headers);
     }
+
+
 
 }
